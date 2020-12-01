@@ -2,13 +2,13 @@ package teams_client
 
 import (
 	"bytes"
+	"github.com/LoicC04/teams-webhook-go-client/model"
 	"log"
 	"net/http"
 	"os"
 	"reflect"
 	"strings"
 	"text/template"
-	"carneyandco.fr/teams-client/model"
 )
 
 func Send(message model.MessageCard) {
@@ -20,7 +20,7 @@ func Send(message model.MessageCard) {
 
 	tmpl := template.Must(template.New("MessageCard").Funcs(template.FuncMap{
 		"last": func(x int, a interface{}) bool {
-			return x == reflect.ValueOf(a).Len() - 1
+			return x == reflect.ValueOf(a).Len()-1
 		},
 	}).Parse(MessageCardTemplate))
 	var tpl bytes.Buffer
@@ -28,7 +28,7 @@ func Send(message model.MessageCard) {
 	// Send request
 	requestBody := tpl.String()
 	res, err := http.Post(webhook, "application/json", strings.NewReader(requestBody))
-	if err !=nil {
+	if err != nil {
 		log.Fatal(err)
 	}
 
